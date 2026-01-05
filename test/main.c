@@ -1,17 +1,17 @@
-#include "helpers/int_float.h"
-#include "helpers/int_int.h"
+#include "helpers/string_int.h"
 #include <stdio.h>
 
 int main(void)
 {
-    hashmap_int_int_t* map = hashmap_create_int_int();
-    hashmap_int_float_t* map_float = hashmap_create_int_float();
+    hashmap_string_int_t* map = hashmap_create_string_int();
 
-    hashmap_set_int_int(map_float, 1, 100);
-    hashmap_set_int_int(map, 2, 200);
+    hashmap_set_string_int(map, "one", 1);
+    hashmap_set_string_int(map, "two", 2);
 
-    printf("Key: 1, Value: %d\n", hashmap_get_int_int(map, 1));
-    printf("Key: 2, Value: %d\n", hashmap_get_int_int(map, 2));
+    printf("one: %d\n", hashmap_get_string_int(map, "one"));
+    printf("two: %d\n", hashmap_get_string_int(map, "two"));
+    printf("has three: %d\n", hashmap_get_string_int(map, "three"));
 
-    hashmap_destroy_int_int(map);
+    hashmap_destroy_string_int(map);
+    return 0;
 }

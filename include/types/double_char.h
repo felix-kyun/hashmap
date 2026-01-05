@@ -6,7 +6,7 @@
 #ifndef __FELIX_HASHMAP_DOUBLE_CHAR_H__
 #define __FELIX_HASHMAP_DOUBLE_CHAR_H__
 
-#include "helpers/_helper.h"
+#include "__internals/__type_gen_macro.h"
 HASHMAP_DEFINE_TYPE(double, double, char, char)
 
 #endif // __FELIX_HASHMAP_DOUBLE_CHAR_H__

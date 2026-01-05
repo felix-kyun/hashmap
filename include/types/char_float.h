@@ -6,7 +6,7 @@
 #ifndef __FELIX_HASHMAP_CHAR_FLOAT_H__
 #define __FELIX_HASHMAP_CHAR_FLOAT_H__
 
-#include "helpers/_helper.h"
+#include "__internals/__type_gen_macro.h"
 HASHMAP_DEFINE_TYPE(char, char, float, float)
 
 #endif // __FELIX_HASHMAP_CHAR_FLOAT_H__

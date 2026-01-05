@@ -6,7 +6,7 @@
 #ifndef __FELIX_HASHMAP_STRING_FLOAT_H__
 #define __FELIX_HASHMAP_STRING_FLOAT_H__
 
-#include "helpers/_helper_string.h"
+#include "__internals/__string_gen_macro.h"
 HASHMAP_DEFINE_STRING_TYPE(float, float)
 
 #endif // __FELIX_HASHMAP_STRING_FLOAT_H__
