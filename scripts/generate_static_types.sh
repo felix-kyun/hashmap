@@ -40,7 +40,7 @@ HASHMAP_DEFINE_STRING_TYPE(${1}, ${1})
 EOF
 }
 
-GENERATE_TYPE=(int float double char)
+GENERATE_TYPE=(short int long float double char)
 
 for KEY_TYPE in "${GENERATE_TYPE[@]}"; do
     for VALUE_TYPE in "${GENERATE_TYPE[@]}"; do
