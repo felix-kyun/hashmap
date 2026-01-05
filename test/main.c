@@ -1,4 +1,4 @@
-#include "helpers/string_int.h"
+#include "types/string_int.h"
 #include <stdio.h>
 
 int main(void)
