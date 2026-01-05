@@ -1,15 +1,14 @@
 #include <stdio.h>
 #include "hashmap.h"
+#include "hashmap_string.h"
 
 int
 main(void)
 {
-    hashmap_t* map = hashmap_create_default(sizeof(int), sizeof(int));
-    int key = 1;
-    int value = 2;
-    hashmap_set(map, &key, &value);
+    hashmap_t* map = hashmap_create_string(sizeof(int));
+    hashmap_set(map, "one", &(int){1});
 
-    int* retrieved_value = hashmap_get(map, &(int){2});
+    int* retrieved_value = hashmap_get(map, "one");
     if (retrieved_value != NULL) {
         printf("Retrieved value: %d\n", *retrieved_value);
     } else {
