@@ -1,8 +1,7 @@
-# Makefile
 CC := clang
 AR := ar
 CFLAGS := -Wall -Wextra -Werror -pedantic -std=c11
-INCLUDE_DIR := include 
+INCLUDE_DIR := include
 SOURCE_DIR := src
 BUILD_DIR := build
 INCLUDES := -I$(INCLUDE_DIR)
@@ -21,12 +20,16 @@ debug: $(_TARGET)
 	mv $(_TARGET) .
 
 $(_TARGET): $(_OBJS)
-	$(AR) rcs $@ $^ 
+	$(AR) rcs $@ $^
 
 $(_OBJS): $(BUILD_DIR)/%.o: src/%.c
 	@if [ ! -d $(dir $@) ]; then mkdir -p $(dir $@); fi
 	$(CC) -c $< -o $@ $(CFLAGS) $(INCLUDES)
 
+test: $(_TARGET)
+	make clean
+	make all
+	$(CC) -o build/test test/main.c -L. -lhashmap $(INCLUDES) $(CFLAGS)
 
 lazy:
 	make clean
@@ -37,7 +40,7 @@ clean:
 	rm -rf build/*
 	@if [ -f $(TARGET) ]; then rm $(TARGET); fi
 
-setup: 
+setup:
 	$(shell [ -d $(BUILD_DIR) ] || mkdir -p $(BUILD_DIR))
 	$(shell [ -d $(SOURCE_DIR) ] || mkdir -p $(SOURCE_DIR))
 	$(shell [ -d $(INCLUDE_DIR) ] || mkdir -p $(INCLUDE_DIR))

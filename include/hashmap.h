@@ -12,13 +12,13 @@ typedef void (*hash_value_free_fn_t)(void* value);
 
 typedef struct hashmap_t {
 
-    struct hashmap_item_t* buckets;
+    struct hashnode_t** buckets;
 
     size_t size;
     size_t capacity;
     size_t key_size;
     size_t item_size;
-    float load_factor;
+    float max_load_factor;
 
     hash_fn_t hash;
     hash_cmp_fn_t cmp;
@@ -27,27 +27,31 @@ typedef struct hashmap_t {
 
 } hashmap_t;
 
-typedef struct hashmap_item_t {
+typedef struct hashnode_t {
     void* key;
     void* value;
     uint64_t hash;
-} hashmap_item_t;
+    struct hashnode_t* next;
+} hashnode_t;
 
 hashmap_t* hashmap_create(
     size_t key_size,
     size_t item_size,
     size_t capacity,
+    float max_load_factor,
     hash_fn_t hash,
     hash_cmp_fn_t cmp,
+    /* Not Used */
     hash_key_free_fn_t key_free,
     hash_value_free_fn_t value_free);
-#define haspmap_create_default(key_size, item_size) \
-    hashmap_create(key_size, item_size, 0, NULL, NULL, NULL, NULL)
 
-int hashmap_has(hashmap_t* map, const void* key);
-void* hashmap_get(hashmap_t* map, const void* key);
-int hashmap_set(hashmap_t* map, const void* key, const void* value);
-int hashmap_delete(hashmap_t* map, const void* key);
+#define hashmap_create_default(key_size, item_size) \
+    hashmap_create(key_size, item_size, 0, 0.75f, NULL, NULL, NULL, NULL)
+
+int hashmap_has(hashmap_t* map,  void* key);
+void* hashmap_get(hashmap_t* map,  void* key);
+int hashmap_set(hashmap_t* map,  void* key,  void* value);
+int hashmap_remove(hashmap_t* map,  void* key);
 
 void hashmap_destroy(hashmap_t* map);
 
