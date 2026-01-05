@@ -2,7 +2,7 @@
 #ifndef __FELIX_HASHMAP_HELPERS_H__
 #define __FELIX_HASHMAP_HELPERS_H__
 
-#include "hashmap.h"
+#include "hashmap.h" // IWYU pragma: keep
 #include <stdlib.h>
 
 #define hashmap_create_default(key_size, item_size) \
