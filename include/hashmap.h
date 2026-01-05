@@ -50,13 +50,10 @@ hashmap_t* hashmap_create(
     key_free_fn_t key_free,
     value_free_fn_t value_free);
 
-#define hashmap_create_default(key_size, item_size) \
-    hashmap_create(key_size, item_size, 0, 0.75f, NULL, NULL, NULL, NULL, NULL, NULL)
-
-void* hashmap_get(hashmap_t* map,  void* key);
-int hashmap_has(hashmap_t* map,  void* key);
-int hashmap_set(hashmap_t* map,  void* key,  void* value);
-int hashmap_remove(hashmap_t* map,  void* key);
+void* hashmap_get(hashmap_t* map, void* key);
+int hashmap_has(hashmap_t* map, void* key);
+int hashmap_set(hashmap_t* map, void* key, void* value);
+int hashmap_remove(hashmap_t* map, void* key);
 
 void hashmap_destroy(hashmap_t* map);
 

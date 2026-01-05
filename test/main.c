@@ -1,19 +1,15 @@
+#include "helpers/int_int.h"
 #include <stdio.h>
-#include "hashmap.h"
-#include "hashmap_string.h"
 
-int
-main(void)
+int main(void)
 {
-    hashmap_t* map = hashmap_create_string(sizeof(int));
-    hashmap_set(map, "one", &(int){1});
+    hashmap_int_int_t* map = hashmap_create_int_int();
 
-    int* retrieved_value = hashmap_get(map, "one");
-    if (retrieved_value != NULL) {
-        printf("Retrieved value: %d\n", *retrieved_value);
-    } else {
-        printf("Key not found\n");
-    }
+    hashmap_set_int_int(map, 1, 100);
+    hashmap_set_int_int(map, 2, 200);
 
-    hashmap_destroy(map);
+    printf("Key: 1, Value: %d\n", hashmap_get_int_int(map, 1));
+    printf("Key: 2, Value: %d\n", hashmap_get_int_int(map, 2));
+
+    hashmap_destroy_int_int(map);
 }
