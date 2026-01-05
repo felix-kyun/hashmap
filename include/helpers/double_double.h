@@ -6,7 +6,7 @@
 #ifndef __FELIX_HASHMAP_DOUBLE_DOUBLE_H__
 #define __FELIX_HASHMAP_DOUBLE_DOUBLE_H__
 
-#include "helpers/_helpers.h"
+#include "helpers/_helper.h"
 HASHMAP_DEFINE_TYPE(double, double, double, double)
 
 #endif // __FELIX_HASHMAP_DOUBLE_DOUBLE_H__

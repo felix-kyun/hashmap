@@ -3,10 +3,7 @@
 #define __FELIX_HASHMAP_HELPERS_H__
 
 #include "hashmap.h" // IWYU pragma: keep
-#include <stdlib.h>
-
-#define hashmap_create_default(key_size, item_size) \
-    hashmap_create(key_size, item_size, 0, 0.75f, NULL, NULL, NULL, NULL, NULL, NULL)
+#include <stdlib.h> // IWYU pragma: keep
 
 #define HASHMAP_KEY_REF(type, value) (&(type) { value })
 #define HASHMAP_VALUE_REF(type, value) (&(type) { value })

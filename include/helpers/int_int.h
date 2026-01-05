@@ -6,7 +6,7 @@
 #ifndef __FELIX_HASHMAP_INT_INT_H__
 #define __FELIX_HASHMAP_INT_INT_H__
 
-#include "helpers/_helpers.h"
+#include "helpers/_helper.h"
 HASHMAP_DEFINE_TYPE(int, int, int, int)
 
 #endif // __FELIX_HASHMAP_INT_INT_H__
