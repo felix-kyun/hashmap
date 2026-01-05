@@ -12,31 +12,8 @@ typedef void* (*value_copy_fn_t)(const void* value, size_t value_size);
 typedef void (*key_free_fn_t)(void* key);
 typedef void (*value_free_fn_t)(void* value);
 
-typedef struct hashmap_t {
-
-    struct hashnode_t** buckets;
-
-    size_t size;
-    size_t capacity;
-    size_t key_size;
-    size_t value_size;
-    float max_load_factor;
-
-    hash_fn_t hash;
-    cmp_fn_t cmp;
-    key_copy_fn_t key_copy;
-    value_copy_fn_t value_copy;
-    key_free_fn_t key_free;
-    value_free_fn_t value_free;
-
-} hashmap_t;
-
-typedef struct hashnode_t {
-    void* key;
-    void* value;
-    uint64_t hash;
-    struct hashnode_t* next;
-} hashnode_t;
+typedef struct hashmap_t hashmap_t;
+typedef struct hashnode_t hashnode_t;
 
 hashmap_t* hashmap_create(
     size_t key_size,

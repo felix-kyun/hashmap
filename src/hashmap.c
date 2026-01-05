@@ -5,6 +5,32 @@
 #include <stdlib.h>
 #include <string.h>
 
+typedef struct hashmap_t {
+
+    struct hashnode_t** buckets;
+
+    size_t size;
+    size_t capacity;
+    size_t key_size;
+    size_t value_size;
+    float max_load_factor;
+
+    hash_fn_t hash;
+    cmp_fn_t cmp;
+    key_copy_fn_t key_copy;
+    value_copy_fn_t value_copy;
+    key_free_fn_t key_free;
+    value_free_fn_t value_free;
+
+} hashmap_t;
+
+typedef struct hashnode_t {
+    void* key;
+    void* value;
+    uint64_t hash;
+    struct hashnode_t* next;
+} hashnode_t;
+
 static inline int
 hashmap_default_cmp(const void* key1, const void* key2, size_t size)
 {
@@ -86,7 +112,6 @@ hashmap_get_node(hashmap_t* map, void* key)
     }
 
     return NULL;
-
 }
 
 static inline void
@@ -188,8 +213,7 @@ hashmap_create(
     return map;
 }
 
-int
-hashmap_set(hashmap_t *map, void *key, void *value)
+int hashmap_set(hashmap_t* map, void* key, void* value)
 {
     if (!map || !key || !value)
         return -1;
@@ -218,21 +242,18 @@ hashmap_set(hashmap_t *map, void *key, void *value)
     return 0;
 }
 
-void*
-hashmap_get(hashmap_t* map, void* key)
+void* hashmap_get(hashmap_t* map, void* key)
 {
     hashnode_t* existing = hashmap_get_node(map, key);
     return existing ? existing->value : NULL;
 }
 
-int
-hashmap_has(hashmap_t* map, void* key)
+int hashmap_has(hashmap_t* map, void* key)
 {
     return hashmap_get_node(map, key) != NULL;
 }
 
-int
-hashmap_remove(hashmap_t* map, void* key)
+int hashmap_remove(hashmap_t* map, void* key)
 {
     if (!map || !key)
         return -1;
@@ -264,10 +285,9 @@ hashmap_remove(hashmap_t* map, void* key)
     return -1;
 }
 
-void
-hashmap_destroy(hashmap_t* map)
+void hashmap_destroy(hashmap_t* map)
 {
-    if(!map)
+    if (!map)
         return;
 
     for (size_t i = 0; i < map->capacity; i++) {

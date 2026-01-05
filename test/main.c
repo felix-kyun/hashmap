@@ -1,11 +1,13 @@
+#include "helpers/int_float.h"
 #include "helpers/int_int.h"
 #include <stdio.h>
 
 int main(void)
 {
     hashmap_int_int_t* map = hashmap_create_int_int();
+    hashmap_int_float_t* map_float = hashmap_create_int_float();
 
-    hashmap_set_int_int(map, 1, 100);
+    hashmap_set_int_int(map_float, 1, 100);
     hashmap_set_int_int(map, 2, 200);
 
     printf("Key: 1, Value: %d\n", hashmap_get_int_int(map, 1));
