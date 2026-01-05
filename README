@@ -1,0 +1,20 @@
+A simple and efficient hash table implementation in c using separate chaining and fnv-1a hash function.
+
+It supports static sized keys and values by default, but it can be overridden to support dynamic sized keys and values by supplying custom methods in the constructor.
+
+The signature of the constructor is as follows:
+hashmap_t* hashmap_create(
+    size_t key_size,            // Size of the key in bytes
+    size_t value_size,          // Size of the value in bytes
+    size_t capacity,            // Initial capacity of the hash table
+    float max_load_factor,      // Maximum load factor before resizing
+    hash_fn_t hash,             // Hash function to use
+    cmp_fn_t cmp,               // Comparison function to use
+    key_copy_fn_t key_copy,     // Function to copy a key
+    value_copy_fn_t value_copy, // Function to copy a value
+    key_free_fn_t key_free,     // Function to free a key
+    value_free_fn_t value_free); // Function to free a value
+
+The signature of the supplied functions can be found in hashmap.h.
+
+Fnv1a hashing function can be used directly from hash.h (fnv1a_hash).
