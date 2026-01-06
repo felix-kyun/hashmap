@@ -28,7 +28,8 @@ void* hashmap_key_copy_string(const void* key, size_t size);
  */
 void hashmap_key_free_string(void* key);
 
-#define hashmap_create_string(item_size) \
-    hashmap_create(0, item_size, 0, 0.75f, fnv1a_hash_string, hashmap_cmp_string, hashmap_key_copy_string, NULL, hashmap_key_free_string, NULL)
+#define hashmap_create_string(item_size)                                                                               \
+    hashmap_create(0, item_size, 0, 0.75f, fnv1a_hash_string, hashmap_cmp_string, hashmap_key_copy_string, NULL,       \
+        hashmap_key_free_string, NULL)
 
 #endif // __FELIX_HASHMAP_STRING_H__

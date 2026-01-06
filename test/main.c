@@ -1,7 +1,8 @@
 #include "types/string_int.h"
 #include <stdio.h>
 
-int main(void)
+int
+main(void)
 {
     hashmap_string_int_t* map = hashmap_create_string_int();
 

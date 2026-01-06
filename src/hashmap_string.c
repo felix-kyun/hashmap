@@ -2,11 +2,11 @@
 #include "hashmap_string.h"
 #include "fnv1a.h"
 #include <stdint.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 uint64_t
-fnv1a_hash_string(const void *_key, size_t key_size)
+fnv1a_hash_string(const void* _key, size_t key_size)
 {
     (void)key_size;
     uint64_t hash = FNV1A_64_OFFSET;

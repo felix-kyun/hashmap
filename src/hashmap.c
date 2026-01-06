@@ -13,21 +13,21 @@ typedef struct hashmap_t {
     size_t capacity;
     size_t key_size;
     size_t value_size;
-    float max_load_factor;
+    float  max_load_factor;
 
-    hash_fn_t hash;
-    cmp_fn_t cmp;
-    key_copy_fn_t key_copy;
+    hash_fn_t       hash;
+    cmp_fn_t        cmp;
+    key_copy_fn_t   key_copy;
     value_copy_fn_t value_copy;
-    key_free_fn_t key_free;
+    key_free_fn_t   key_free;
     value_free_fn_t value_free;
 
 } hashmap_t;
 
 typedef struct hashnode_t {
-    void* key;
-    void* value;
-    uint64_t hash;
+    void*              key;
+    void*              value;
+    uint64_t           hash;
     struct hashnode_t* next;
 } hashnode_t;
 
@@ -80,7 +80,7 @@ create_new_node(hashmap_t* map, void* key, void* value, uint64_t hash)
 
     node->hash = hash;
     node->next = NULL;
-    node->key = map->key_copy(key, map->key_size);
+    node->key  = map->key_copy(key, map->key_size);
     if (!node->key) {
         free(node);
         return NULL;
@@ -101,8 +101,8 @@ hashmap_get_node(hashmap_t* map, void* key)
     if (!map || !key)
         return NULL;
 
-    uint64_t hash = map->hash(key, map->key_size);
-    size_t index = hash % map->capacity;
+    uint64_t hash  = map->hash(key, map->key_size);
+    size_t   index = hash % map->capacity;
 
     hashnode_t* current = map->buckets[index];
     while (current) {
@@ -140,17 +140,17 @@ hashmap_needs_resize(hashmap_t* map)
 static int
 hashmap_resize(hashmap_t* map)
 {
-    size_t old_capacity = map->capacity;
-    size_t old_size = map->size;
-    hashnode_t** old_buckets = map->buckets;
-    map->capacity = map->capacity * 2;
-    map->size = 0;
-    map->buckets = (hashnode_t**)calloc(map->capacity, sizeof(hashnode_t*));
+    size_t       old_capacity = map->capacity;
+    size_t       old_size     = map->size;
+    hashnode_t** old_buckets  = map->buckets;
+    map->capacity             = map->capacity * 2;
+    map->size                 = 0;
+    map->buckets              = (hashnode_t**)calloc(map->capacity, sizeof(hashnode_t*));
 
     if (!map->buckets) {
         map->capacity = old_capacity;
-        map->size = old_size;
-        map->buckets = old_buckets;
+        map->size     = old_size;
+        map->buckets  = old_buckets;
         return -1;
     }
 
@@ -158,7 +158,7 @@ hashmap_resize(hashmap_t* map)
         hashnode_t* current = old_buckets[i];
         while (current) {
             hashnode_t* next = current->next;
-            current->next = NULL;
+            current->next    = NULL;
             hashmap_set_existing_node(map, current);
             current = next;
         }
@@ -168,17 +168,8 @@ hashmap_resize(hashmap_t* map)
 }
 
 hashmap_t*
-hashmap_create(
-    size_t key_size,
-    size_t value_size,
-    size_t capacity,
-    float max_load_factor,
-    hash_fn_t hash,
-    cmp_fn_t cmp,
-    key_copy_fn_t key_copy,
-    value_copy_fn_t value_copy,
-    key_free_fn_t key_free,
-    value_free_fn_t value_free)
+hashmap_create(size_t key_size, size_t value_size, size_t capacity, float max_load_factor, hash_fn_t hash, cmp_fn_t cmp,
+    key_copy_fn_t key_copy, value_copy_fn_t value_copy, key_free_fn_t key_free, value_free_fn_t value_free)
 {
     hashmap_t* map = (hashmap_t*)malloc(sizeof(hashmap_t));
     if (!map)
@@ -190,11 +181,11 @@ hashmap_create(
     while (cap < capacity)
         cap <<= 1;
 
-    map->size = 0;
+    map->size     = 0;
     map->capacity = cap;
 
-    map->key_size = key_size;
-    map->value_size = value_size;
+    map->key_size        = key_size;
+    map->value_size      = value_size;
     map->max_load_factor = max_load_factor ? max_load_factor : 0.75f;
 
     map->buckets = (hashnode_t**)calloc(cap, sizeof(hashnode_t*));
@@ -203,17 +194,18 @@ hashmap_create(
         return NULL;
     }
 
-    map->hash = hash ? hash : fnv1a_hash;
-    map->cmp = cmp ? cmp : hashmap_default_cmp;
-    map->key_copy = key_copy ? key_copy : hashmap_default_key_copy;
+    map->hash       = hash ? hash : fnv1a_hash;
+    map->cmp        = cmp ? cmp : hashmap_default_cmp;
+    map->key_copy   = key_copy ? key_copy : hashmap_default_key_copy;
     map->value_copy = value_copy ? value_copy : hashmap_default_value_copy;
-    map->key_free = key_free ? key_free : hashmap_default_key_free;
+    map->key_free   = key_free ? key_free : hashmap_default_key_free;
     map->value_free = value_free ? value_free : hashmap_default_value_free;
 
     return map;
 }
 
-int hashmap_set(hashmap_t* map, void* key, void* value)
+int
+hashmap_set(hashmap_t* map, void* key, void* value)
 {
     if (!map || !key || !value)
         return -1;
@@ -242,27 +234,30 @@ int hashmap_set(hashmap_t* map, void* key, void* value)
     return 0;
 }
 
-void* hashmap_get(hashmap_t* map, void* key)
+void*
+hashmap_get(hashmap_t* map, void* key)
 {
     hashnode_t* existing = hashmap_get_node(map, key);
     return existing ? existing->value : NULL;
 }
 
-int hashmap_has(hashmap_t* map, void* key)
+int
+hashmap_has(hashmap_t* map, void* key)
 {
     return hashmap_get_node(map, key) != NULL;
 }
 
-int hashmap_remove(hashmap_t* map, void* key)
+int
+hashmap_remove(hashmap_t* map, void* key)
 {
     if (!map || !key)
         return -1;
 
-    uint64_t hash = map->hash(key, map->key_size);
-    size_t index = hash % map->capacity;
+    uint64_t hash  = map->hash(key, map->key_size);
+    size_t   index = hash % map->capacity;
 
     hashnode_t* current = map->buckets[index];
-    hashnode_t* prev = NULL;
+    hashnode_t* prev    = NULL;
     while (current) {
         if (current->hash == hash && map->cmp(key, current->key, map->key_size) == 0) {
 
@@ -278,14 +273,15 @@ int hashmap_remove(hashmap_t* map, void* key)
             free(current);
             return 0;
         }
-        prev = current;
+        prev    = current;
         current = current->next;
     }
 
     return -1;
 }
 
-void hashmap_destroy(hashmap_t* map)
+void
+hashmap_destroy(hashmap_t* map)
 {
     if (!map)
         return;
