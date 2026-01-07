@@ -49,8 +49,21 @@ hashmap_key_copy_string(const void* key, size_t size)
     return strdup(key);
 }
 
+void*
+hashmap_value_copy_string(const void* value, size_t size)
+{
+    (void)size;
+    return strdup(value);
+}
+
 void
 hashmap_key_free_string(void* key)
 {
     free(key);
+}
+
+void
+hashmap_value_free_string(void* value)
+{
+    free(value);
 }
